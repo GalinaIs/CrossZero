@@ -1,0 +1,27 @@
+#app, html, body, #app > div {
+    height: 100%;
+    margin: 0 auto; 
+    padding: 0;
+    max-width: 1200px;
+}
+
+header, footer {
+    flex-shrink: 0;
+}
+
+.container {
+    flex-grow: 1;
+}
+
+#app > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar-dark .navbar-brand {
+    color: #fff!important;
+}
+
+.nav-link:hover {
+    cursor: pointer;
+}
