@@ -1,16 +1,58 @@
+const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlPlugin = require('html-webpack-plugin');
+
 module.exports = {
-    entry: './src/main.js',
+    entry: {
+        index: path.resolve(__dirname, 'src', 'main.js'),
+    },
     output: {
-      path: '/',
-      filename: 'index.js'
+        path: path.resolve(__dirname, 'dist'),
+        filename: '[name].js',
     },
-    devServer:{
-      inline: true,
-      port:3333
+    resolve: {
+        extensions: ['.js', '.jsx'],
+        alias: {
+            components: path.resolve(__dirname, 'src', 'components'),
+            containers: path.resolve(__dirname, 'src', 'containers'),
+            actions: path.resolve(__dirname, 'src', 'actions'),
+            reducers: path.resolve(__dirname, 'src', 'reducers'),
+        }
     },
-    module:{
-      rules:[
-        {test: /\.jsx?$/, exclude: /node_modules/, use: 'babel-loader'}
-      ]
-    }
-  };
+    module: {
+        rules: [
+            {
+                test: /\.jsx?$/,
+                exclude: /node-modules/,
+                use: {
+                    loader: 'babel-loader',
+                }
+            }, {
+                test: /\.css$/,
+                use: [
+                  {
+                    loader: MiniCssExtractPlugin.loader,
+                    options: {
+                      //publicPath: '../',
+                      hmr: process.env.NODE_ENV === 'development',
+                    },
+                  },
+                  'css-loader',
+                ],
+              },
+        ]
+    }, 
+    devServer: {
+        historyApiFallback: true,
+    },
+    plugins: [
+        new MiniCssExtractPlugin ({
+            filename: 'style.css'
+        }),
+        new HtmlPlugin({
+            template: path.resolve(__dirname, 'src', 'index.html'),
+            filename: 'index.html',
+            chunks: ['index'],
+        }),
+    ]
+}
