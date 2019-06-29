@@ -40,6 +40,7 @@
     "classnames": "^2.2.6",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-load-image": "^0.1.7",
     "reactstrap": "^8.0.0"
   }
 }

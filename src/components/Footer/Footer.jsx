@@ -1,7 +1,7 @@
 import React from 'react';
 import { string } from 'prop-types';
 
-const Footer = ({footerContent}) => (
+const Footer = ({ footerContent }) => (
     <footer className="py-5 bg-dark navbar-fixed-bottom">
         <div className="container">
             <p className="m-0 text-center text-white">{footerContent}</p>

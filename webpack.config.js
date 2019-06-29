@@ -27,23 +27,23 @@ module.exports = {
             }, {
                 test: /\.css$/,
                 use: [
-                  {
-                    loader: MiniCssExtractPlugin.loader,
-                    options: {
-                      //publicPath: '../',
-                      hmr: process.env.NODE_ENV === 'development',
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            //publicPath: '../',
+                            hmr: process.env.NODE_ENV === 'development',
+                        },
                     },
-                  },
-                  'css-loader',
+                    'css-loader',
                 ],
-              },
+            }
         ]
-    }, 
+    },
     devServer: {
         historyApiFallback: true,
     },
     plugins: [
-        new MiniCssExtractPlugin ({
+        new MiniCssExtractPlugin({
             filename: 'style.css'
         }),
         new HtmlPlugin({
