@@ -33,7 +33,6 @@ class Menu extends Component {
 
     render() {
         const { title, menu } = this.props;
-        console.log(menu);
 
         return (
             <div>
@@ -42,9 +41,9 @@ class Menu extends Component {
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
-                            {menu.map((menuName, ind) =>
-                                <NavItem key={ind}><div className="nav-link" onClick={menuName.func}>{menuName.text}</div></NavItem>)
-                            }
+                            {menu.map((menuName, ind) => 
+                                <NavItem key={ind}><div className="nav-link" onClick={menuName.fun}>{menuName.text}</div></NavItem>
+                            )}
                         </Nav>
                     </Collapse>
                 </Navbar>

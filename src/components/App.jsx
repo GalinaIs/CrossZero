@@ -1,26 +1,44 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 import { Container } from 'reactstrap';
 import Main from 'components/Main';
 
-const myFooterContent = 'Copyright © 2019';
-const myMenu = [{
-  text: 'Начать заново',
-  fun: null,
-}];
-const myTitle = "Игра 'Крестики-Нолики'";
-const mySize = 3;
-const myCountCellsForWin = 3;
+class App extends Component {
+  constructor(props) {
+    super(props);
 
-const App = () => (
-  <div>
-    <Header title={myTitle} menu={myMenu} />
-    <Container>
-      <Main size={mySize} countCellsForWin={myCountCellsForWin} />
-    </Container>
-    <Footer footerContent={myFooterContent} />
-  </div>
-);
+    this.state = {
+      isNew: false
+    };
+  }
+
+  beginNewGame = () => {
+    this.setState({
+      isNew: true
+    });
+  }
+
+  myFooterContent = 'Copyright © 2019';
+  myMenu = [{
+    text: 'Начать заново',
+    fun: this.beginNewGame,
+  }];
+  myTitle = "Игра 'Крестики-Нолики'";
+  mySize = 3;
+  myCountCellsForWin = 3;
+
+  render() {
+    return (
+      <div>
+        <Header title={this.myTitle} menu={this.myMenu} />
+        <Container>
+          <Main size={this.mySize} countCellsForWin={this.myCountCellsForWin} {...this.state}/>
+        </Container>
+        <Footer footerContent={this.myFooterContent} />
+      </div>
+    );
+  }
+}
 
 export default App;

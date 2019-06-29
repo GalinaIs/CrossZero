@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
-import { number } from 'prop-types';
+import { number, bool } from 'prop-types';
 import ImageCell from 'components/ImageCell';
 import TitleField from 'components/TitleField';
 
 class Field extends Component {
     static propTypes = {
         size: number.isRequired,
-        countCellsForWin: number.isRequired
+        countCellsForWin: number.isRequired,
+        isNew: bool.isRequired,
     };
 
-    constructor(props) {
-        super(props);
-
-        const { size } = this.props;
+    initiateStateCells(size) {
         const stateCells = new Array(size * size);
         for (let i = 0; i < size; i++)
             stateCells[i] = new Array(size);
@@ -21,8 +19,16 @@ class Field extends Component {
             for (let j = 0; j < size; j++)
                 stateCells[i][j] = "";
 
+        return stateCells;
+    }
+
+    constructor(props) {
+        super(props);
+
+        const { size } = this.props;
+
         this.state = {
-            stateCells,
+            stateCells: this.initiateStateCells(size),
             isCross: true,
             countFreeCells: size * size,
             isFinish: false,
@@ -30,6 +36,20 @@ class Field extends Component {
         };
 
         this.update = this.update.bind(this);
+    }
+
+    componentWillReceiveProps(newProps) {
+        const { size } = newProps;
+
+        if (newProps.isNew) {
+            this.setState({
+                stateCells: this.initiateStateCells(size),
+                isCross: true,
+                countFreeCells: size * size,
+                isFinish: false,
+                winner: ""
+            });
+        }
     }
 
     checkRightDiagonal(startIndX, startIndY, symbol) {
@@ -173,7 +193,7 @@ class Field extends Component {
     render() {
         return (
             <div>
-                <TitleField isFinish={this.state.isFinish} winner={this.state.winner} isCross={this.state.isCross} />
+                <TitleField {...this.state} />
 
                 <table>
                     <tbody>
