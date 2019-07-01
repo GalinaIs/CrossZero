@@ -179,6 +179,9 @@ class Field extends Component {
     }
 
     update(element) {
+        if (!element.dataset.x)
+            element = element.parentElement.parentElement;
+
         const x = element.dataset.x;
         const y = element.dataset.y;
 
