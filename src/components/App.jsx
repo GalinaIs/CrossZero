@@ -1,44 +1,39 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 import { Container } from 'reactstrap';
 import Main from 'components/Main';
+import { connect } from 'react-redux';
+import { setNewGame } from 'actions/newGame';
+import PropTypes from 'prop-types';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isNew: false
-    };
-  }
-
-  beginNewGame = () => {
-    this.setState({
-      isNew: true
-    });
-  }
-
-  myFooterContent = 'Copyright © 2019';
-  myMenu = [{
+const App = (props) => {
+  const myFooterContent = 'Copyright © 2019';
+  const myMenu = [{
     text: 'Начать заново',
-    fun: this.beginNewGame,
+    fun: props.setNewGame,
   }];
-  myTitle = "Игра 'Крестики-Нолики'";
-  mySize = 3;
-  myCountCellsForWin = 3;
+  const myTitle = "Игра 'Крестики-Нолики'";
+  const mySize = 3;
+  const myCountCellsForWin = 3;
 
-  render() {
-    return (
-      <div>
-        <Header title={this.myTitle} menu={this.myMenu} />
-        <Container>
-          <Main size={this.mySize} countCellsForWin={this.myCountCellsForWin} {...this.state}/>
-        </Container>
-        <Footer footerContent={this.myFooterContent} />
-      </div>
-    );
-  }
+  return (
+    <div>
+      <Header title={myTitle} menu={myMenu} />
+      <Container>
+        <Main size={mySize} countCellsForWin={myCountCellsForWin} newGame={props.newGame} />
+      </Container>
+      <Footer footerContent={myFooterContent} />
+    </div>
+  );
 }
 
-export default App;
+App.propTypes = {
+  newGame: PropTypes.number.isRequired,
+  setNewGame: PropTypes.func.isRequired
+};
+
+export default connect(
+  store => ({ newGame: store.newGameReducer.newGame }),
+  dispatch => ({ setNewGame: () => dispatch(setNewGame()) })
+)(App);

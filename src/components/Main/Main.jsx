@@ -1,12 +1,12 @@
 import React from 'react';
-import { number, bool } from 'prop-types';
+import { number } from 'prop-types';
 import { Row, Col } from 'reactstrap';
 import Field from 'components/Field';
 
 const minSize = 2;
 const maxSize = 12;
 
-const Main = ({ size, countCellsForWin, isNew }) => {
+const Main = ({ size, countCellsForWin, newGame }) => {
     if (size < minSize)
         size = minSize;
     if (size > maxSize)
@@ -24,7 +24,7 @@ const Main = ({ size, countCellsForWin, isNew }) => {
         <Row>
             <Col lg={leftPadding} />
             <Col lg={size}>
-                <Field size={size} countCellsForWin={countCellsForWin} isNew={isNew} />
+                <Field size={size} countCellsForWin={countCellsForWin} newGame={newGame} />
             </Col>
             <Col lg={rightPadding} />
         </Row>
@@ -34,7 +34,7 @@ const Main = ({ size, countCellsForWin, isNew }) => {
 Main.propTypes = {
     size: number.isRequired,
     countCellsForWin: number.isRequired,
-    isNew: bool,
+    newGame: number.isRequired
 };
 
 export default Main;
