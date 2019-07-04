@@ -1,12 +1,13 @@
 export default class CrossZero {
     constructor(state, action) {
         this.state = state;
-        this.action = action;
+        this.size = size;
+        this.countCellsForWin = countCellsForWin;
     }
 
     stateGame() {
-        const { size, countCellsForWin } = this.action;
-        const countSquare = size - countCellsForWin;
+        //const { size, countCellsForWin } = this.action;
+        const countSquare = this.size - this.countCellsForWin;
 
         for (let i = 0; i <= countSquare; i++) {
             for (let j = 0; j <= countSquare; j++) {

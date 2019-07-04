@@ -27,7 +27,7 @@ const setCells = (state, action) => {
     cells[action.x] = row;
     const tmpState = {...state, cells};
 
-    const newState = new CrossZero(tmpState, action).stateGame();
+    const newState = new CrossZero(tmpState, size, countCellsForWin).stateGame();
     //console.log(newState);
 
     return Object.assign({}, state, {
