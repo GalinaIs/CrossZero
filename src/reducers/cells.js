@@ -2,6 +2,9 @@ import { SET_CELLS } from 'actions/cells';
 import { LOAD_CELLS } from 'actions/loadCells';
 import CrossZero from './CrossZero';
 
+const size = 5;
+const countCellsForWin = 3;
+
 const initiateStateCells = (size) => {
     const stateCells = new Array(size);
     for (let i = 0; i < size; i++)
@@ -18,33 +21,33 @@ const setCells = (state, action) => {
     if (state.isFinish || state.cells[action.x][action.y] !== "")
         return state;
 
-    state.cells[action.x][action.y] = state.isCross ? "X" : "O";
+    const cells = [...state.cells];
+    const row = [...state.cells[action.x]];
+    row[action.y] = state.isCross ? "X" : "O";
+    cells[action.x] = row;
+    const tmpState = {...state, cells};
 
-    const newState = new CrossZero(state, action).stateGame();
-    console.log(newState);
+    const newState = new CrossZero(tmpState, action).stateGame();
+    //console.log(newState);
 
     return Object.assign({}, state, {
         ...newState
     });
 }
 
-export default (state = {
-    cells: [],
-    countFreeCells: 0,
+const initialState = {
+    cells: initiateStateCells(size),
+    countFreeCells: size * size,
     isCross: true,
     isFinish: false,
     winner: ""
-}, action) => {
+};
+
+export default (state = initialState, action) => {
 
     switch (action.type) {
         case LOAD_CELLS:
-            return Object.assign({}, state, {
-                cells: initiateStateCells(action.size),
-                countFreeCells: action.size * action.size,
-                isCross: true,
-                isFinish: false,
-                winner: ""
-            });
+            return Object.assign({}, initialState);
         case SET_CELLS:
             return setCells(state, action);
         default:

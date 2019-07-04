@@ -6,7 +6,7 @@ import Field from 'components/Field';
 const minSize = 2;
 const maxSize = 12;
 
-const Main = ({ size, countCellsForWin, newGame }) => {
+const Main = ({ size, countCellsForWin }) => {
     if (size < minSize)
         size = minSize;
     if (size > maxSize)
@@ -24,17 +24,11 @@ const Main = ({ size, countCellsForWin, newGame }) => {
         <Row>
             <Col lg={leftPadding} />
             <Col lg={size}>
-                <Field size={size} countCellsForWin={countCellsForWin} newGame={newGame} />
+                <Field />
             </Col>
             <Col lg={rightPadding} />
         </Row>
     );
-};
-
-Main.propTypes = {
-    size: number.isRequired,
-    countCellsForWin: number.isRequired,
-    newGame: number.isRequired
 };
 
 export default Main;

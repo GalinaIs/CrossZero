@@ -114,7 +114,7 @@ export default class CrossZero {
     winSymbol(symbol) {
         this.state.isFinish = true;
         this.state.winner = symbol;
-        console.log("win " + symbol);
+        //console.log("win " + symbol);
     }
 
     winNodoby() {
