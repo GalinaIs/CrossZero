@@ -1,12 +1,11 @@
 export default class CrossZero {
-    constructor(state, action) {
+    constructor(state, size, countCellsForWin) {
         this.state = state;
         this.size = size;
         this.countCellsForWin = countCellsForWin;
     }
 
     stateGame() {
-        //const { size, countCellsForWin } = this.action;
         const countSquare = this.size - this.countCellsForWin;
 
         for (let i = 0; i <= countSquare; i++) {
@@ -38,10 +37,9 @@ export default class CrossZero {
     }
 
     checkRightDiagonal(startIndX, startIndY, symbol) {
-        const { countCellsForWin } = this.action;
         const { cells } = this.state;
 
-        for (let i = 0; i < countCellsForWin; i++) {
+        for (let i = 0; i < this.countCellsForWin; i++) {
             if (cells[startIndX + i][startIndY + i] !== symbol)
                 return false;
         }
@@ -50,11 +48,10 @@ export default class CrossZero {
     }
 
     checkLeftDiagonal(startIndX, startIndY, symbol) {
-        const { countCellsForWin } = this.action;
         const { cells } = this.state;
 
-        for (let i = 0; i < countCellsForWin; i++) {
-            if (cells[startIndX + countCellsForWin - i - 1][startIndY + i] !== symbol)
+        for (let i = 0; i < this.countCellsForWin; i++) {
+            if (cells[startIndX + this.countCellsForWin - i - 1][startIndY + i] !== symbol)
                 return false;
         }
 
@@ -67,10 +64,9 @@ export default class CrossZero {
     }
 
     checkOneHorizontalLine(startIndX, startIndY, symbol) {
-        const { countCellsForWin } = this.action;
         const { cells } = this.state;
 
-        for (let i = 0; i < countCellsForWin; i++) {
+        for (let i = 0; i < this.countCellsForWin; i++) {
             if (cells[startIndX][startIndY + i] !== symbol)
                 return false;
         }
@@ -79,9 +75,7 @@ export default class CrossZero {
     }
 
     checkHorizontalLines(startIndX, startIndY, symbol) {
-        const { countCellsForWin } = this.action;
-
-        for (let i = 0; i < countCellsForWin; i++) {
+        for (let i = 0; i < this.countCellsForWin; i++) {
             if (this.checkOneHorizontalLine(startIndX + i, startIndY, symbol))
                 return true;
         }
@@ -90,10 +84,9 @@ export default class CrossZero {
     }
 
     checkOneVerticalLine(startIndX, startIndY, symbol) {
-        const { countCellsForWin } = this.action;
         const { cells } = this.state;
 
-        for (let i = 0; i < countCellsForWin; i++) {
+        for (let i = 0; i < this.countCellsForWin; i++) {
             if (cells[startIndX + i][startIndY] !== symbol)
                 return false;
         }
@@ -102,9 +95,7 @@ export default class CrossZero {
     }
 
     checkVerticalLines(startIndX, startIndY, symbol) {
-        const { countCellsForWin } = this.action;
-
-        for (let i = 0; i < countCellsForWin; i++) {
+        for (let i = 0; i < this.countCellsForWin; i++) {
             if (this.checkOneVerticalLine(startIndX, startIndY + i, symbol))
                 return true;
         }
@@ -115,7 +106,6 @@ export default class CrossZero {
     winSymbol(symbol) {
         this.state.isFinish = true;
         this.state.winner = symbol;
-        //console.log("win " + symbol);
     }
 
     winNodoby() {

@@ -1,22 +1,10 @@
 import React from 'react';
-import { number } from 'prop-types';
+import PropTypes from 'prop-types';
 import { Row, Col } from 'reactstrap';
 import Field from 'components/Field';
+import { connect } from 'react-redux';
 
-const minSize = 2;
-const maxSize = 12;
-
-const Main = ({ size, countCellsForWin }) => {
-    if (size < minSize)
-        size = minSize;
-    if (size > maxSize)
-        size = maxSize;
-
-    if (countCellsForWin < minSize)
-        countCellsForWin = minSize;
-    if (countCellsForWin > size)
-        countCellsForWin = size;
-
+const Main = ({ size, minSize, maxSize }) => {
     const leftPadding = Math.ceil((maxSize - size) / minSize);
     const rightPadding = leftPadding + (maxSize - size) % minSize;
 
@@ -31,4 +19,16 @@ const Main = ({ size, countCellsForWin }) => {
     );
 };
 
-export default Main;
+Main.propTypes = {
+    size: PropTypes.number.isRequired,
+    maxSize: PropTypes.number.isRequired,
+    minSize: PropTypes.number.isRequired
+};
+
+export default connect(
+    store => ({
+        size: store.cellsReducer.size,
+        minSize: store.cellsReducer.minSize,
+        maxSize: store.cellsReducer.maxSize,
+    })
+)(Main);

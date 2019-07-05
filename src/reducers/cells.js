@@ -2,8 +2,20 @@ import { SET_CELLS } from 'actions/cells';
 import { LOAD_CELLS } from 'actions/loadCells';
 import CrossZero from './CrossZero';
 
-const size = 5;
-const countCellsForWin = 3;
+let size = 3;
+let countCellsForWin = 3;
+const minSize = 2;
+const maxSize = 12;
+
+if (size < minSize)
+    size = minSize;
+if (size > maxSize)
+    size = maxSize;
+
+if (countCellsForWin < minSize)
+    countCellsForWin = minSize;
+if (countCellsForWin > size)
+    countCellsForWin = size;
 
 const initiateStateCells = (size) => {
     const stateCells = new Array(size);
@@ -18,20 +30,25 @@ const initiateStateCells = (size) => {
 }
 
 const setCells = (state, action) => {
-    if (state.isFinish || state.cells[action.x][action.y] !== "")
-        return state;
-
     const cells = [...state.cells];
     const row = [...state.cells[action.x]];
     row[action.y] = state.isCross ? "X" : "O";
     cells[action.x] = row;
-    const tmpState = {...state, cells};
+    return {...state, cells };
+}
 
-    const newState = new CrossZero(tmpState, size, countCellsForWin).stateGame();
-    //console.log(newState);
+const setState = (state, action) => {
+    if (state.isFinish || state.cells[action.x][action.y] !== "")
+        return state;
+
+    const symbol = state.isCross ? "X" : "O";
+    state = setCells(state, action, symbol);
+
+    const newState = new CrossZero(state, size, countCellsForWin).stateGame();
 
     return Object.assign({}, state, {
-        ...newState
+        ...newState,
+        [action.node]: symbol,
     });
 }
 
@@ -40,17 +57,21 @@ const initialState = {
     countFreeCells: size * size,
     isCross: true,
     isFinish: false,
-    winner: ""
+    winner: "",
+    size,
+    minSize,
+    maxSize
+};
+
+const reducer = {
+    [LOAD_CELLS]: () => initialState,
+    [SET_CELLS]: (state, action) => setState(state, action),
 };
 
 export default (state = initialState, action) => {
-
-    switch (action.type) {
-        case LOAD_CELLS:
-            return Object.assign({}, initialState);
-        case SET_CELLS:
-            return setCells(state, action);
-        default:
-            return state;
+    if (!action.type || !reducer[action.type]) {
+        return state;
     }
+
+    return reducer[action.type](state, action);
 };

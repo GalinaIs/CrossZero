@@ -1,6 +1,6 @@
 export const SET_CELLS = 'SET_CELLS';
 
-export const setCells = (element, size, countCellsForWin) => {
+export const setCells = (element, node) => {
     if (!element.dataset.x)
         element = element.parentElement.parentElement;
 
@@ -11,7 +11,6 @@ export const setCells = (element, size, countCellsForWin) => {
         type: SET_CELLS,
         x,
         y,
-        size,
-        countCellsForWin,
+        node
     }
 };

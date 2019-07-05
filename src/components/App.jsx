@@ -4,7 +4,6 @@ import Footer from 'components/Footer';
 import { Container } from 'reactstrap';
 import Main from 'components/Main';
 import { connect } from 'react-redux';
-import { setNewGame } from 'actions/newGame';
 import PropTypes from 'prop-types';
 import { loadCells } from 'actions/loadCells';
 
@@ -12,9 +11,9 @@ const App = (props) => {
   const myFooterContent = 'Copyright © 2019';
   const myTitle = "Игра 'Крестики-Нолики'";
   const myMenu = [{
-      text: 'Начать заново',
-      fun: props.loadCells,
-    }];
+    text: 'Начать заново',
+    fun: props.loadCells,
+  }];
 
   return (
     <div>
@@ -33,5 +32,5 @@ App.propTypes = {
 
 export default connect(
   null,
-  dispatch => ({ loadCells: size => dispatch(loadCells(size)) })
+  dispatch => ({ loadCells: () => dispatch(loadCells()) })
 )(App);
